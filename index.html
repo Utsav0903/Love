@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Valentines Day</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+ <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     .gradient-background {
       background: rgb(255, 208, 229);
@@ -46,50 +46,64 @@
     </div>
   </div>
 
-  <script type="module">
-    import confetti from 'https://cdn.skypack.dev/canvas-confetti';
-    const yesButton = document.getElementById('yesButton');
-    const noButton = document.getElementById('noButton');
-    const imageDisplay = document.getElementById('imageDisplay');
-    const valentineQuestion = document.getElementById('valentineQuestion');
-    const responseButtons = document.getElementById('responseButtons');
-  
-    let noClickCount = 0;
-    let buttonHeight = 48; // Starting height in pixels
-    let buttonWidth = 80;
-    let fontSize = 20; // Starting font size in pixels
-    const imagePaths = [
-      "./images/image1.gif",
-      "./images/image2.gif",
-      "./images/image3.gif",
-      "./images/image4.gif",
-      "./images/image5.gif",
-      "./images/image6.gif",
-      "./images/image7.gif"
-    ];
-  
-    noButton.addEventListener('click', function() {
-      if (noClickCount < 5) {
-        noClickCount++;
-        imageDisplay.src = imagePaths[noClickCount];
-        buttonHeight += 35; // Increase height by 5px on each click
-        buttonWidth += 35;
-        fontSize += 25; // Increase font size by 1px on each click
-        yesButton.style.height = `${buttonHeight}px`; // Update button height
-        yesButton.style.width = `${buttonWidth}px`;
-        yesButton.style.fontSize = `${fontSize}px`; // Update font size
-        if (noClickCount < 6) {
-          noButton.textContent = ["No", "Are you sure?", "Pookie please", "Don't do this to me :(", "You're breaking my heart", "I'm gonna cry..."][noClickCount];
-        }
-      }
+ <script>
+  const yesButton = document.getElementById('yesButton');
+  const noButton = document.getElementById('noButton');
+  const imageDisplay = document.getElementById('imageDisplay');
+  const valentineQuestion = document.getElementById('valentineQuestion');
+  const responseButtons = document.getElementById('responseButtons');
+
+  let noClickCount = 0;
+  let buttonHeight = 48;
+  let buttonWidth = 80;
+  let fontSize = 20;
+
+  const imagePaths = [
+    "./images/image1.gif",
+    "./images/image2.gif",
+    "./images/image3.gif",
+    "./images/image4.gif",
+    "./images/image5.gif",
+    "./images/image6.gif",
+    "./images/image7.gif"
+  ];
+
+  noButton.addEventListener('click', () => {
+    if (noClickCount < 6) {
+      noClickCount++;
+      imageDisplay.src = imagePaths[noClickCount];
+      buttonHeight += 20;
+      buttonWidth += 20;
+      fontSize += 8;
+
+      yesButton.style.height = buttonHeight + "px";
+      yesButton.style.width = buttonWidth + "px";
+      yesButton.style.fontSize = fontSize + "px";
+
+      const texts = [
+        "No",
+        "Are you sure?",
+        "Pookie please 🥺",
+        "Don’t do this to me 😢",
+        "You’re breaking my heart 💔",
+        "I’m gonna cry..."
+      ];
+      noButton.textContent = texts[noClickCount];
+    }
+  });
+
+  yesButton.addEventListener('click', () => {
+    imageDisplay.src = "./images/image7.gif";
+    valentineQuestion.textContent = "Yayyy!! 💖";
+    responseButtons.style.display = "none";
+    confetti({
+      particleCount: 150,
+      spread: 70,
+      origin: { y: 0.6 }
     });
-  
-    yesButton.addEventListener('click', () => {
-      imageDisplay.src = './images/image7.gif'; // Change to image7.gif
-      valentineQuestion.textContent = "Yayyy!! :3"; // Change the question text
-      responseButtons.style.display = 'none'; // Hide both buttons
-      confetti(); // Trigger confetti animation
-    });
-  </script>  
+  });
+</script>
+
 </body>
+
 </html>
